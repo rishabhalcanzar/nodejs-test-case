@@ -11,9 +11,6 @@ var config = require( '../config' );
 
 /* GET home page. */
 /*Save transaction to database*/
-
-
-
 router.post( '/authenticate', authController.index );
 router.post( '/register', authController.register );
 
@@ -27,9 +24,14 @@ router.get( '/login', function( req, res ) {
 router.use( function( req, res, next ) {
 
     // check header or url parameters or post parameters for token
-    var token = req.body.token || req.query.token || req.headers[ 'x-access-token' ];
+    var token = req.query.token || req.headers[ 'x-access-token' ] || req.body.token;
+    //something tricky here-req.body.token is ambiguous for both login authentcation token and stripe payment token 
+    //so in case of stripe payment ( /transaction request) changing order above login is passed with x-access-token
+    //received without causing any error but ideally they should have different names
+
     // decode token
     if ( token ) {
+
         // verifies secret and checks exp
         jwt.verify( token, config.secret, function( err, decoded ) {
             if ( err ) {
@@ -59,5 +61,6 @@ router.use( function( req, res, next ) {
 
 
 router.post( '/createtransaction', transactionController.createTransaction );
+router.post( '/repeattransaction', transactionController.repeatTransaction );
 
 module.exports = router;

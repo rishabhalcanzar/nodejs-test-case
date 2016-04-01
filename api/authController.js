@@ -16,7 +16,12 @@ exports.index = function( req, res ) {
         }
 
         if ( !user ) {
-            res.json( {
+            /*res.json( {
+                success: false,
+                message: 'Authentication failed. User not found.'
+            } );*/
+            res.render( 'login', {
+                title: 'Login',
                 success: false,
                 message: 'Authentication failed. User not found.'
             } );
@@ -28,7 +33,12 @@ exports.index = function( req, res ) {
                 }
 
                 if(!isMatch) {
-                    return res.status( 401 ).json( {
+                    /*return res.status( 401 ).json( {
+                        success: false,
+                        message: 'Authentication failed. Wrong password.'
+                    } );*/
+                    res.render( 'login', {
+                        title: 'Login',
                         success: false,
                         message: 'Authentication failed. Wrong password.'
                     } );
@@ -40,9 +50,12 @@ exports.index = function( req, res ) {
                     expiresIn: 1440 // expires in 24 hours
                 } );
 
+                console.log('user.customeriduser.customeriduser.customeriduser.customerid');
+                console.log(user.customerid);
                 // return the information including token as JSON
                 res.render( 'transactions', {
                     token: token,
+                    customerid: user.customerid,
                     title: 'Transactions Page'
                 } );
 

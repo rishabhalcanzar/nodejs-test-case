@@ -1,19 +1,87 @@
-<form action="/authenticate" method="POST">
-    <h1>Login to test page</h1>
-    <label for="name">Name: </label>
-    <input type="text" name="name" id="name">
-    <br>
-    <label for="password">Password: </label>
-    <input type="password" name="password" id="password">
-    <input type="submit" value="Login">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<% include header %>
+<body>
+ 
+    <div class="container">
+        <h3>Have an Account?</h3>
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#login" data-toggle="tab">Login</a></li>
+                <li><a href="#create" data-toggle="tab">Create Account</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="login">
+                    <form class="form-horizontal" action="/authenticate" method="POST">
+                        <fieldset>
+                            <h1>Login to test page</h1>
 
-<form action="/register" method="POST">
-    <h1>Register to test page</h1>
-    <label for="name">Name: </label>
-    <input type="text" name="name" id="name">
-    <br>
-    <label for="password">Password: </label>
-    <input type="password" name="password" id="password">
-    <input type="submit" value="Register">
-</form>
+                            <% if ((typeof success != 'undefined') && (typeof success != 'undefined')) {%>
+                                <p class="login-errors alert alert-danger"><%=message%></p>
+                            <% } %>
+                            <div class="control-group">
+                                <!-- Username -->
+                                <label class="control-label"  for="name"><h4>Name: </h4></label>
+                                <div class="controls">
+                                    <input type="text" name="name" placeholder="" class="input-xlarge">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <!-- Password-->
+                                <label class="control-label" for="password"><h4>Password: </h4></label>
+                                <div class="controls">
+                                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <input class="btn btn-success" type="submit" value="Login">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>                
+                </div>
+                <div class="tab-pane fade" id="create">
+                    <form class="form-horizontal" action="/register" method="POST">
+                        <fieldset>
+                            <h1>Register an account</h1>
+
+                            <div class="control-group">
+                                <!-- Username -->
+                                <label class="control-label" for="name"><h4>Name: </h4></label>
+                                <div class="controls">
+                                    <input type="text" id="name" name="name" placeholder="" class="input-xlarge">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <!-- Password-->
+                                <label class="control-label" for="password"><h4>Password: </h4></label>
+                                <div class="controls">
+                                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                                </div>
+                            </div>
+                            <br>
+                            
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <input class="btn btn-success" type="submit" value="Register">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% include footer %>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
